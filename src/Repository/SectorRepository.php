@@ -21,6 +21,21 @@ class SectorRepository extends ServiceEntityRepository
         parent::__construct($registry, Sector::class);
     }
 
+    /*
+     * Find sectors by their IDs.
+     *
+     * @param array $sectorIds Array of sector IDs
+     * @return Sector[]
+    */
+    public function findSectorsByIds(array $ids): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Sector[] Returns an array of Sector objects
 //     */
